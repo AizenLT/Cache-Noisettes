@@ -27,7 +27,7 @@ public class Picture extends ImageIcon
 
         BufferedImage image;
         try {
-            image = ImageIO.read(new File(filename));
+            image = ImageIO.read(new File("Img-assets/"+filename));
         } catch (Exception e)
         {
             System.out.println("Could not find image file: " + filename);
