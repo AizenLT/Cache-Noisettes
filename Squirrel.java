@@ -213,67 +213,78 @@ public class Squirrel
     * @param otherLPieceY A int containing the others Squirrels' lPiece Y coordinate.
     * @param return Returns a boolean value stating that the current Squirrel move didnt conflict with the one being checked against.
     */
-    public boolean checkUpDown(int direction,int otherHeadX,int otherHeadY,int otherBodyX,int otherBodyY,int terrainX,int terrainY, boolean TerrainExists,int otherLPieceX,int otherLPieceY)
-    {
-        // Collision between walls
-        if(((this.headXPos+direction>=0)&&(this.bodyXPos+direction>=0))&&((this.headXPos+direction<4)&&(this.bodyXPos+direction<4)))
-        {
-            // Collision between heads
-            if((this.headXPos+direction !=otherHeadX)||(this.headYPos!=otherHeadY))
-            {
-                // Collision between tails
-                if((this.bodyXPos+direction !=otherBodyX)||(this.bodyYPos!=otherBodyY))
-                {
-                    // Collision between heads and tails,
-                    if((this.headXPos+direction !=otherBodyX)||(this.headYPos!=otherBodyY))
-                    {
-                        // Collision between tails and heads
-                        if((this.bodyXPos+direction !=otherHeadX)||(this.bodyYPos!=otherHeadY))
-                        {
-                            // Collision between head and terrain
-                            if((this.headXPos+direction !=terrainX)||(this.headYPos!=terrainY)||(TerrainExists==false))
-                            {
-                                // Collision between body and terrain
-                                if((this.bodyXPos+direction !=terrainX)||(this.bodyYPos!=terrainY)||(TerrainExists==false))
-                                {
-                                    // Collision between lPiece and wall
-                                    if((((this.lPieceX+direction>=0)&&((this.lPieceX+direction<4))||(this.lPiece==false))))
-                                    {
-                                        // Collision between Head and lPiece
-                                        if((this.headXPos+direction != otherLPieceX)||(this.headYPos!=otherLPieceY))
-                                        {
-                                            // Collision between lPiece and heads
-                                            if((this.lPieceX+direction !=otherHeadX)||(this.lPieceY!=otherHeadY))
-                                            {
-                                                // Collision between lPiece and tails
-                                                if((this.bodyXPos+direction !=otherLPieceX)||(this.bodyYPos!=otherLPieceY))
-                                                {
-                                                    // Collision between lPiece and Tail
-                                                    if((this.lPieceX+direction !=otherBodyX)||(this.lPieceY!=otherBodyY))
-                                                    {
-                                                        // Collision between lPiece and Terrain
-                                                        if((this.lPieceX+direction !=terrainX)||(this.lPieceY!=terrainY)||(TerrainExists==false))
-                                                        {
-                                                            // Collision between lPiece and lPiece 
-                                                            if(((this.lPieceX+direction !=otherLPieceX)||(this.lPieceY!=otherLPieceY))||(this.lPiece==false))
-                                                            {
-                                                                return true;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            
-                                            }
-                                        }
-                                    } 
-                                }
-                            }   
-                        } 
-                    }
-                }      
-            }    
-        }
-        return false;
+    public boolean checkCollisionWithWallsVertical(int direction) {
+        return (this.headXPos + direction >= 0) && (this.bodyXPos + direction >= 0) &&
+               (this.headXPos + direction < 4) && (this.bodyXPos + direction < 4);
+    }
+    
+    public boolean checkCollisionBetweenHeadsVertical(int direction, int otherHeadX, int otherHeadY) {
+        return (this.headXPos + direction != otherHeadX) || (this.headYPos != otherHeadY);
+    }
+    
+    public boolean checkCollisionBetweenTailsVertical(int direction, int otherBodyX, int otherBodyY) {
+        return (this.bodyXPos + direction != otherBodyX) || (this.bodyYPos != otherBodyY);
+    }
+    
+    public boolean checkCollisionBetweenHeadsAndTailsVertical(int direction, int otherBodyX, int otherBodyY) {
+        return (this.headXPos + direction != otherBodyX) || (this.headYPos != otherBodyY);
+    }
+    
+    public boolean checkCollisionBetweenTailsAndHeadsVertical(int direction, int otherHeadX, int otherHeadY) {
+        return (this.bodyXPos + direction != otherHeadX) || (this.bodyYPos != otherHeadY);
+    }
+    
+    public boolean checkCollisionWithTerrainVertical(int direction, int terrainX, int terrainY, boolean terrainExists) {
+        return (this.headXPos + direction != terrainX) || (this.headYPos != terrainY) || !terrainExists;
+    }
+    
+    public boolean checkCollisionBetweenBodyAndTerrainVertical(int direction, int terrainX, int terrainY, boolean terrainExists) {
+        return (this.bodyXPos + direction != terrainX) || (this.bodyYPos != terrainY) || !terrainExists;
+    }
+    
+    public boolean checkCollisionBetweenLPieceAndWallVertical(int direction) {
+        return (this.lPieceX + direction >= 0) && (this.lPieceX + direction < 4) || !this.lPiece;
+    }
+    
+    public boolean checkCollisionBetweenHeadAndLPieceVertical(int direction, int otherLPieceX, int otherLPieceY) {
+        return (this.headXPos + direction != otherLPieceX) || (this.headYPos != otherLPieceY);
+    }
+    
+    public boolean checkCollisionBetweenLPieceAndHeadsVertical(int direction, int otherHeadX, int otherHeadY) {
+        return (this.lPieceX + direction != otherHeadX) || (this.lPieceY != otherHeadY);
+    }
+    
+    public boolean checkCollisionBetweenTailsAndLPieceVertical(int direction, int otherLPieceX, int otherLPieceY) {
+        return (this.bodyXPos + direction != otherLPieceX) || (this.bodyYPos != otherLPieceY);
+    }
+    
+    public boolean checkCollisionBetweenLPieceAndTailsVertical(int direction, int otherBodyX, int otherBodyY) {
+        return (this.lPieceX + direction != otherBodyX) || (this.lPieceY != otherBodyY);
+    }
+    
+    public boolean checkCollisionBetweenLPieceAndTerrainVertical(int direction, int terrainX, int terrainY, boolean terrainExists) {
+        return (this.lPieceX + direction != terrainX) || (this.lPieceY != terrainY) || !terrainExists;
+    }
+    
+    public boolean checkCollisionBetweenLPieceAndLPieceVertical(int direction, int otherLPieceX, int otherLPieceY) {
+        return (this.lPieceX + direction != otherLPieceX) || (this.lPieceY != otherLPieceY) || !this.lPiece;
+    }
+    
+    public boolean checkUpDown(int direction, int otherHeadX, int otherHeadY, int otherBodyX, int otherBodyY, int terrainX, int terrainY, boolean terrainExists, int otherLPieceX, int otherLPieceY) {
+        return checkCollisionWithWallsVertical(direction) &&
+               checkCollisionBetweenHeadsVertical(direction, otherHeadX, otherHeadY) &&
+               checkCollisionBetweenTailsVertical(direction, otherBodyX, otherBodyY) &&
+               checkCollisionBetweenHeadsAndTailsVertical(direction, otherBodyX, otherBodyY) &&
+               checkCollisionBetweenTailsAndHeadsVertical(direction, otherHeadX, otherHeadY) &&
+               checkCollisionWithTerrainVertical(direction, terrainX, terrainY, terrainExists) &&
+               checkCollisionBetweenBodyAndTerrainVertical(direction, terrainX, terrainY, terrainExists) &&
+               checkCollisionBetweenLPieceAndWallVertical(direction) &&
+               checkCollisionBetweenHeadAndLPieceVertical(direction, otherLPieceX, otherLPieceY) &&
+               checkCollisionBetweenLPieceAndHeadsVertical(direction, otherHeadX, otherHeadY) &&
+               checkCollisionBetweenTailsAndLPieceVertical(direction, otherLPieceX, otherLPieceY) &&
+               checkCollisionBetweenLPieceAndTailsVertical(direction, otherBodyX, otherBodyY) &&
+               checkCollisionBetweenLPieceAndTerrainVertical(direction, terrainX, terrainY, terrainExists) &&
+               checkCollisionBetweenLPieceAndLPieceVertical(direction, otherLPieceX, otherLPieceY);
     }
 
     /** Moves the Squirrel's X coordinates in either direction north/south.
@@ -288,70 +299,79 @@ public class Squirrel
     
     /** Checks if the Squirrel has collided with anything moving east/west.
     */
-    public boolean checkLeftRight(int direction,int otherHeadX,int otherHeadY,int otherBodyX,int otherBodyY,int terrainX,int terrainY, boolean TerrainExists,int otherLPieceX,int otherLPieceY)
-    {
-        // Collision between walls
-        if(((this.headYPos+direction>=0)&&(this.bodyYPos+direction>=0))&&((this.headYPos+direction<4)&&(this.bodyYPos+direction<4)))
-        {
-            // Collision between heads
-            if((this.headYPos+direction !=otherHeadY)||(this.headXPos!=otherHeadX))
-            {
-                // Collision between tails
-                if((this.bodyYPos+direction !=otherBodyY)||(this.bodyXPos!=otherBodyX))
-                {
-                    // Collision between heads and tails,
-                    if((this.headYPos+direction !=otherBodyY)||(this.headXPos!=otherBodyX))
-                    {
-                        // Collision between tails and heads
-                        if((this.bodyYPos+direction !=otherHeadY)||(this.bodyXPos!=otherHeadX))
-                        {
-                            // Collision between head and terrain
-                            if((this.headYPos+direction !=terrainY)||(this.headXPos!=terrainX)||(TerrainExists==false))
-                            {
-                                // Collision between body and terrain
-                                if((this.bodyYPos+direction !=terrainY)||(this.bodyXPos!=terrainX)||(TerrainExists==false))
-                                {
-                                    // Collision between lPiece and wall
-                                    if((((this.lPieceY+direction>=0)&&(this.lPieceY+direction<4))||(this.lPiece==false)))
-                                    {
-                                        // Collision between head and lPiece
-                                        if((this.headYPos+direction != otherLPieceY)||(this.headXPos!=otherLPieceX))
-                                        {
-                                            // Collision between lPiece and heads
-                                            if((this.lPieceY+direction !=otherHeadY)||(this.lPieceX!=otherHeadX))
-                                            {
-                                                // Collision between tails and lPiece
-                                                if((this.bodyYPos+direction !=otherLPieceY)||(this.bodyXPos!=otherLPieceX))
-                                                {
-                                                    // Collision between lPiece and tails
-                                                    if((this.lPieceY+direction !=otherBodyY)||(this.lPieceX!=otherBodyX))
-                                                    {
-                                                        // Collision between lPiece and Terrain
-                                                        if((this.lPieceY+direction !=terrainY)||(this.lPieceX!=terrainX)||(TerrainExists==false))
-                                                        {
-                                                            // Collision between lPiece and lPiece 
-                                                            if(((this.lPieceY+direction !=otherLPieceY)||(this.lPieceX!=otherLPieceX))||(this.lPiece==false))
-                                                            {
-                                                                return true;
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            
-                                            }
-                                        }
-                                    }
-                                    
-                                }  
-                            }  
-                            
-                        } 
-                    }
-                }      
-            }    
- 
-        }
-        return false;
+    public boolean checkCollisionWithWallsHorizontal(int direction) {
+        return (this.headYPos + direction >= 0) && (this.bodyYPos + direction >= 0) &&
+               (this.headYPos + direction < 4) && (this.bodyYPos + direction < 4);
+    }
+    
+    public boolean checkCollisionBetweenHeadsHorizontal(int direction, int otherHeadX, int otherHeadY) {
+        return (this.headYPos + direction != otherHeadY) || (this.headXPos != otherHeadX);
+    }
+    
+    public boolean checkCollisionBetweenTailsHorizontal(int direction, int otherBodyX, int otherBodyY) {
+        return (this.bodyYPos + direction != otherBodyY) || (this.bodyXPos != otherBodyX);
+    }
+    
+    public boolean checkCollisionBetweenHeadsAndTailsHorizontal(int direction, int otherBodyX, int otherBodyY) {
+        return (this.headYPos + direction != otherBodyY) || (this.headXPos != otherBodyX);
+    }
+    
+    public boolean checkCollisionBetweenTailsAndHeadsHorizontal(int direction, int otherHeadX, int otherHeadY) {
+        return (this.bodyYPos + direction != otherHeadY) || (this.bodyXPos != otherHeadX);
+    }
+    
+    public boolean checkCollisionWithTerrainHorizontal(int direction, int terrainX, int terrainY, boolean terrainExists) {
+        return (this.headYPos + direction != terrainY) || (this.headXPos != terrainX) || !terrainExists;
+    }
+    
+    public boolean checkCollisionBetweenBodyAndTerrainHorizontal(int direction, int terrainX, int terrainY, boolean terrainExists) {
+        return (this.bodyYPos + direction != terrainY) || (this.bodyXPos != terrainX) || !terrainExists;
+    }
+    
+    public boolean checkCollisionBetweenLPieceAndWallHorizontal(int direction) {
+        return (this.lPieceY + direction >= 0) && (this.lPieceY + direction < 4) || !this.lPiece;
+    }
+    
+    public boolean checkCollisionBetweenHeadAndLPieceHorizontal(int direction, int otherLPieceX, int otherLPieceY) {
+        return (this.headYPos + direction != otherLPieceY) || (this.headXPos != otherLPieceX);
+    }
+    
+    public boolean checkCollisionBetweenLPieceAndHeadsHorizontal(int direction, int otherHeadX, int otherHeadY) {
+        return (this.lPieceY + direction != otherHeadY) || (this.lPieceX != otherHeadX);
+    }
+    
+    public boolean checkCollisionBetweenTailsAndLPieceHorizontal(int direction, int otherLPieceX, int otherLPieceY) {
+        return (this.bodyYPos + direction != otherLPieceY) || (this.bodyXPos != otherLPieceX);
+    }
+    
+    public boolean checkCollisionBetweenLPieceAndTailsHorizontal(int direction, int otherBodyX, int otherBodyY) {
+        return (this.lPieceY + direction != otherBodyY) || (this.lPieceX != otherBodyX);
+    }
+    
+    public boolean checkCollisionBetweenLPieceAndTerrainHorizontal(int direction, int terrainX, int terrainY, boolean terrainExists) {
+        return (this.lPieceY + direction != terrainY) || (this.lPieceX != terrainX) || !terrainExists;
+    }
+    
+    public boolean checkCollisionBetweenLPieceAndLPieceHorizontal(int direction, int otherLPieceX, int otherLPieceY) {
+        return (this.lPieceY + direction != otherLPieceY) || (this.lPieceX != otherLPieceX) || !this.lPiece;
+    }
+    
+    public boolean checkLeftRight(int direction, int otherHeadX, int otherHeadY, int otherBodyX, int otherBodyY, int terrainX, int terrainY, boolean terrainExists, int otherLPieceX, int otherLPieceY) {
+        
+        return checkCollisionWithWallsHorizontal(direction) &&
+               checkCollisionBetweenHeadsHorizontal(direction, otherHeadX, otherHeadY) &&
+               checkCollisionBetweenTailsHorizontal(direction, otherBodyX, otherBodyY) &&
+               checkCollisionBetweenHeadsAndTailsHorizontal(direction, otherBodyX, otherBodyY) &&
+               checkCollisionBetweenTailsAndHeadsHorizontal(direction, otherHeadX, otherHeadY) &&
+               checkCollisionWithTerrainHorizontal(direction, terrainX, terrainY, terrainExists) &&
+               checkCollisionBetweenBodyAndTerrainHorizontal(direction, terrainX, terrainY, terrainExists) &&
+               checkCollisionBetweenLPieceAndWallHorizontal(direction) &&
+               checkCollisionBetweenHeadAndLPieceHorizontal(direction, otherLPieceX, otherLPieceY) &&
+               checkCollisionBetweenLPieceAndHeadsHorizontal(direction, otherHeadX, otherHeadY) &&
+               checkCollisionBetweenTailsAndLPieceHorizontal(direction, otherLPieceX, otherLPieceY) &&
+               checkCollisionBetweenLPieceAndTailsHorizontal(direction, otherBodyX, otherBodyY) &&
+               checkCollisionBetweenLPieceAndTerrainHorizontal(direction, terrainX, terrainY, terrainExists) &&
+               checkCollisionBetweenLPieceAndLPieceHorizontal(direction, otherLPieceX, otherLPieceY);
     }
 
     /** Moves the Squirrel's Y coordinates in either direction east/west.
